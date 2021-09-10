@@ -1,0 +1,14 @@
+{
+	"name": "kana-quiz",
+	"version": "1.0.0",
+	"description": "An developed to help students memorize the Japanese hiragana and katana alphabets.",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Rhys Dent",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.17.1"
+	}
+}
