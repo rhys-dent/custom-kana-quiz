@@ -1,15 +1,17 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { Context } from "../../Context";
 
 export default function () {
 	const history = useHistory();
+	const context = useContext(Context);
 	const message = useRef(null);
 	function displayMessage(text) {
 		message.current.innerText = text;
 		setTimeout(() => (message.current.innerText = ""), 5000);
 	}
-	async function register(e) {
+	async function submitRegistrationInfo(e) {
 		e.preventDefault();
 		//obtain info from form
 		const email = e.target["email"].value;
@@ -19,16 +21,10 @@ export default function () {
 		if (password !== confirmPassword)
 			return displayMessage("Password's must match");
 		//send email and password to backend
-		axios.post("/api/register", { email, password }).then((res) => {
-			//if successfull response is received, redirect user to login page
-			if (res.data.success) {
-				history.push("/login");
-			}
-			console.log(res.data.message);
-		});
+		context.register(email, password);
 	}
 	return (
-		<form onSubmit={register}>
+		<form onSubmit={submitRegistrationInfo}>
 			<input type="text" name="email" id="" />
 			<input type="text" name="name" id="" />
 			<input type="text" name="password" id="" />

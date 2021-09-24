@@ -1,26 +1,35 @@
 import CreateQuiz from "./create-quiz/CreateQuiz";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import QuizItem from "./QuizItem";
+import { Context } from "../../Context";
 
 export default function () {
-	const [quizzes, setQuizzes] = useState([]);
+	const context = useContext(Context);
+	const [showQuizCreator, setShowQuizCreator] = useState(false);
 	useEffect(() => {
-		getQuizzes();
+		context.updateQuizList();
 	}, []);
-	function getQuizzes() {
-		axios.get("/api/quizzes").then((res) => {
-			setQuizzes(res.data);
-		});
-	}
+
 	return (
 		<div>
-			<div>
-				{quizzes.map((quiz) => (
-					<QuizItem quiz={quiz} getQuizzes={getQuizzes} />
-				))}
-			</div>
-			<CreateQuiz getQuizzes={getQuizzes} />
+			{showQuizCreator ? (
+				<CreateQuiz setShowQuizCreator={setShowQuizCreator} />
+			) : (
+				<div>
+					<button
+						onClick={() => {
+							setShowQuizCreator(true);
+						}}
+					>
+						Create a Quiz
+					</button>
+					<div>
+						{context.quizList.map((quiz) => (
+							<QuizItem quiz={quiz} />
+						))}
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
