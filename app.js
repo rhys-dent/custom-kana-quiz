@@ -9,7 +9,8 @@ dotenv.config();
 //#endregion Require dependencies
 
 //#region Require other
-const router = require("./router");
+const authRouter = require("./routers/auth-router");
+const quizRouter = require("./routers/quiz-router");
 //#endregion Require other
 
 //#region Initialization
@@ -34,8 +35,9 @@ app.use(
 	})
 );
 //router
-app.use("/api", router);
 
+app.use("/api/quizzes", quizRouter);
+app.use("/api/auth", authRouter);
 /*serve react client*/
 const buildPath = path.join(__dirname, "client/build");
 app.use(express.static(buildPath));

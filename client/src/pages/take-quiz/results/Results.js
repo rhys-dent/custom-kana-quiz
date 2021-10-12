@@ -5,25 +5,32 @@ import { answerKey } from "../../../kana-data";
 export default function () {
 	const history = useHistory();
 	const context = useContext(Context);
+	const { chars, guesses } = context.quiz.current;
 	var numCorrect = 0;
-	function checkAnswer({ char, answer }) {
-		const correct = answerKey[char] ?? answerKey[char];
-		numCorrect += (correct && answer === correct) ?? 1;
-		return correct;
-	}
-	const results = context.quiz.current.answers.map((answer) => {
-		return { ...answer, correctAnswer: checkAnswer(answer) };
-	});
 	return (
-		<div>
-			{results.map((answer) => {
-				return (
-					<div>
-						{answer.char} {answer.answer} {answer.correctAnswer}
-					</div>
-				);
-			})}
-			<div>{numCorrect}</div>
+		<div className="centered-page results-page">
+			<div className="results">
+				<div>Character</div>
+				<div>Guess</div>
+				<div>Correct Answer</div>
+				{chars.map((char, i) => {
+					const guess = i < guesses.length ? guesses[i] : "";
+					const correctAnswer = answerKey[char];
+					const correctGuess = correctAnswer === guess;
+					if (correctGuess) numCorrect++;
+					const result = [char, guess, correctAnswer];
+					return result.map((value) => (
+						<div
+							className={correctGuess ? "correct-result" : "incorrect-result"}
+						>
+							{value}
+						</div>
+					));
+				})}
+			</div>
+			<div>
+				Score: {numCorrect}/{chars.length}
+			</div>
 			<button
 				onClick={() => {
 					history.push("/");

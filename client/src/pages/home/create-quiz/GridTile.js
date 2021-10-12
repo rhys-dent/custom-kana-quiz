@@ -1,15 +1,27 @@
-export default function ({ char, isSelected }) {
-	if (isSelected) console.log("selected");
+import { useContext, useEffect } from "react";
+import { Context } from "../../../Context";
+
+export default function ({ char, isSelected, isHeading, toggleSelectedChar }) {
+	const { tileWidth } = useContext(Context);
+
 	return (
-		<span
+		<div
+			className={
+				isSelected
+					? "kana-grid-tile-selected"
+					: isHeading || !char
+					? "kana-grid-heading"
+					: "kana-grid-tile"
+			}
 			style={{
-				display: "inline-block",
-				width: "20%",
-				textAlign: "center",
-				color: isSelected ? "blue" : "black",
+				"--height": tileWidth + "px",
+			}}
+			onClick={(e) => {
+				const selectedChar = e.target.innerText;
+				if (!isHeading) toggleSelectedChar(selectedChar);
 			}}
 		>
 			{char}
-		</span>
+		</div>
 	);
 }

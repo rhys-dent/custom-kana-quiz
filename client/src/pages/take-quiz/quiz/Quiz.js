@@ -1,42 +1,57 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Context } from "../../../Context";
 
 export default function () {
 	const history = useHistory();
 	const { quiz } = useContext(Context);
-	const { answers, name, chars } = quiz.current;
-
+	const { guesses, name, unguessedChars } = quiz.current;
+	const currentGuess = useRef();
 	const [currentChar, setCurrentChar] = useState("");
 
 	function displayNextChar() {}
 	useEffect(() => {
-		setCurrentChar(chars.shift());
+		setCurrentChar(unguessedChars.shift());
+		currentGuess.current.focus();
 	}, []);
 
 	return (
-		<div>
-			<h2>{quiz.current.name}</h2>
-			<div>{chars}</div>
-			<h3>{currentChar}</h3>
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					quiz.current.answers.push({
-						char: currentChar,
-						answer: e.target["answer"].value,
-					});
-					if (chars.length > 0) {
-						setCurrentChar(chars.shift());
-					} else {
-						history.push("/results");
-					}
+		<div className="take-quiz-page">
+			<h2 className="quiz-name">{name}</h2>
+			<div className="the-quiz">
+				<div className="unguessed-chars">Remaining: {unguessedChars}</div>
+				<h3 className="current-kana">{currentChar}</h3>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						guesses.push(currentGuess.current.value);
+						currentGuess.current.value = "";
+						currentGuess.current.focus();
+						if (unguessedChars.length > 0) {
+							setCurrentChar(unguessedChars.shift());
+						} else {
+							history.push("/results");
+						}
+					}}
+				>
+					<input
+						type="text"
+						name=""
+						id="answer"
+						autoComplete="off"
+						ref={currentGuess}
+					/>
+					<input type="submit" value="Submit" />
+				</form>
+			</div>
+
+			<button
+				onClick={() => {
+					history.push("/results");
 				}}
 			>
-				<input type="text" name="" id="answer" />
-				<input type="submit" value="Submit" />
-			</form>
-			<div>{answers.map((answer) => answer.answer)}</div>
+				End Quiz
+			</button>
 		</div>
 	);
 }

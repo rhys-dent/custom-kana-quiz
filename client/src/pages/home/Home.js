@@ -1,34 +1,20 @@
 import CreateQuiz from "./create-quiz/CreateQuiz";
+import QuizList from "./quiz-list/QuizList";
 import { useContext, useEffect, useState } from "react";
-import QuizItem from "./QuizItem";
 import { Context } from "../../Context";
-
+/** Displays a list of quizzes created by the user as well as the option to create a new quiz */
 export default function () {
 	const context = useContext(Context);
-	const [showQuizCreator, setShowQuizCreator] = useState(false);
+	const [show, setShowCreateQuiz] = useState(false);
 	useEffect(() => {
 		context.updateQuizList();
 	}, []);
-
 	return (
 		<div>
-			{showQuizCreator ? (
-				<CreateQuiz setShowQuizCreator={setShowQuizCreator} />
+			{show ? (
+				<CreateQuiz setShowCreateQuiz={setShowCreateQuiz} />
 			) : (
-				<div>
-					<button
-						onClick={() => {
-							setShowQuizCreator(true);
-						}}
-					>
-						Create a Quiz
-					</button>
-					<div>
-						{context.quizList.map((quiz) => (
-							<QuizItem quiz={quiz} />
-						))}
-					</div>
-				</div>
+				<QuizList setShowCreateQuiz={setShowCreateQuiz} />
 			)}
 		</div>
 	);

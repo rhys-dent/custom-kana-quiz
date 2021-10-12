@@ -1,6 +1,12 @@
 const axios = require("axios");
 axios.defaults.withCredentials = true;
 
+const apiRoute = "/api";
+const quizRoute = "/quizzes";
+const authRoute = "/auth";
+const loginRoute = "/login";
+const registerRoute = "/register";
+
 export default {
 	getUsersQuizzes: function () {
 		return axios.get("/api/quizzes");
@@ -15,13 +21,26 @@ export default {
 		});
 	},
 	getLogin: function () {
-		return axios.get("/api/login");
+		return axios.get("/api/auth/login");
 	},
 	postLogin: function (email, password) {
-		return axios.post("/api/login", { email, password });
+		return axios.post("/api/auth/login", { email, password });
 	},
-	deleteLogin: function () {},
-	postRegister: function (email, password) {
-		return axios.post("/api/register", { email, password });
+	deleteLogin: function () {
+		return axios.delete("/api/auth/login");
+	},
+	postRegister: function (email, name, password) {
+		return axios.post("/api/auth/register", { email, name, password });
+	},
+	patchRegister: function ({ email, password, name }) {
+		console.log(name);
+		return axios.patch("/api/auth/register", {
+			email,
+			password,
+			name,
+		});
+	},
+	deleteRegister: function () {
+		return axios.delete("/api/auth/register");
 	},
 };

@@ -1,0 +1,8 @@
+.quiz-item {
+	border: 1px solid black;
+	height: 150px;
+	border-radius: 0.25vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

@@ -1,3 +1,4 @@
-1. Create registration and login unstyled
-    a. test with API
-    b. authorized react route (goes to home page after login, if unauthorized redirect to login)
+1. change references to nameRef
+2. display message
+3. add bcrypt back
+4. regex inputs

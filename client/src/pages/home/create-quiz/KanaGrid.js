@@ -24,8 +24,8 @@ export default function ({ selectedChars, setSelectedChars }) {
 				else setSelectedChars([...selectedChars, selectedChar]);
 			}}
 		>
-			{Object.values(kanaGrid).map((alphabet) => {
-				const rows = Object.values(alphabet).map((group) => {
+			{Object.keys(kanaGrid).map((alphabet) => {
+				const rows = Object.values(kanaGrid[alphabet]).map((group) => {
 					return (
 						<div>
 							{group["n"] ? (
