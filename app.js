@@ -6,6 +6,7 @@ const path = require("path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
+const PORT = process.env.PORT || 8000;
 //#endregion Require dependencies
 
 //#region Require other
@@ -47,4 +48,4 @@ app.get("(/*)?", (req, res) => {
 //#endregion Initialization
 
 /**Start server */
-app.listen(4000, () => console.log("Server running on port", 4000));
+app.listen(PORT, () => console.log("Server running on port", 4000));
