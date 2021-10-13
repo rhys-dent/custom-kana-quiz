@@ -1,4 +1,4 @@
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory, Link } from "react-router-dom";
 import { useContext, useRef } from "react";
 import { Context } from "../../../Context";
 
@@ -28,6 +28,7 @@ export default function () {
 			<input type="text" name="password" id="" />
 			<input type="submit" value="Login" />
 			<label ref={message}></label>
+			<Link to="/registration">Register a new account</Link>
 		</form>
 	);
 }

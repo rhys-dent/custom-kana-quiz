@@ -62,6 +62,9 @@ h2 {
 label {
 	font-size: var(--font-size-m);
 }
+.auth-form a {
+	color: white;
+}
 .page {
 	padding: var(--padding);
 }
